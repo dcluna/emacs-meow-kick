@@ -259,3 +259,393 @@
   :defer t
   :hook
   (after-init . which-key-mode))
+
+;;; ==================== EXTERNAL PACKAGES ====================
+
+;;; VERTICO
+(use-package vertico
+  :ensure t
+  :straight t
+  :hook
+  (after-init . vertico-mode)
+  :custom
+  (vertico-count 10)
+  (vertico-resize nil)
+  (vertico-cycle nil)
+  :config
+  (advice-add #'vertico--format-candidate :around
+              (lambda (orig cand prefix suffix index _start)
+                (setq cand (funcall orig cand prefix suffix index _start))
+                (concat
+                 (if (= vertico--index index)
+                     (propertize "» " 'face '(:foreground "#80adf0" :weight bold))
+                   "  ")
+                 cand))))
+
+
+;;; ORDERLESS
+(use-package orderless
+  :ensure t
+  :straight t
+  :defer t
+  :after vertico
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+
+;;; MARGINALIA
+(use-package marginalia
+  :ensure t
+  :straight t
+  :hook
+  (after-init . marginalia-mode))
+
+
+;;; CONSULT
+(use-package consult
+  :ensure t
+  :straight t
+  :defer t
+  :init
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref))
+
+
+;;; EMBARK
+(use-package embark
+  :ensure t
+  :straight t
+  :defer t)
+
+
+;;; EMBARK-CONSULT
+(use-package embark-consult
+  :ensure t
+  :straight t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+
+;;; CORFU
+(use-package corfu
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (corfu-auto nil)
+  (corfu-auto-prefix 1)
+  (corfu-quit-no-match t)
+  (corfu-scroll-margin 5)
+  (corfu-max-width 50)
+  (corfu-min-width 50)
+  (corfu-popupinfo-delay 0.5)
+  :config
+  (if mk-use-nerd-fonts
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+  :init
+  (global-corfu-mode)
+  (corfu-popupinfo-mode t))
+
+
+;;; NERD-ICONS-CORFU
+(use-package nerd-icons-corfu
+  :if mk-use-nerd-fonts
+  :ensure t
+  :straight t
+  :defer t
+  :after (:all corfu))
+
+;;; TREESITTER-AUTO
+(use-package treesit-auto
+  :ensure t
+  :straight t
+  :after emacs
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode t))
+
+
+;;; MARKDOWN-MODE
+(use-package markdown-mode
+  :defer t
+  :straight t
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+
+
+;;; LSP-MODE
+(use-package lsp-mode
+  :ensure t
+  :straight t
+  :defer t
+  :hook (
+         (lsp-mode . lsp-enable-which-key-integration)
+         ((js-mode
+           tsx-ts-mode
+           typescript-ts-base-mode
+           css-mode
+           go-ts-mode
+           js-ts-mode
+           prisma-mode
+           python-base-mode
+           ruby-base-mode
+           rust-ts-mode
+           web-mode) . lsp-deferred))
+  :commands lsp
+  :custom
+  (lsp-keymap-prefix "C-c l")
+  (lsp-inlay-hint-enable nil)
+  (lsp-completion-provider :none)
+  (lsp-session-file (locate-user-emacs-file ".lsp-session"))
+  (lsp-log-io nil)
+  (lsp-idle-delay 0.5)
+  (lsp-keep-workspace-alive nil)
+  (lsp-enable-xref t)
+  (lsp-auto-configure t)
+  (lsp-enable-links nil)
+  (lsp-eldoc-enable-hover t)
+  (lsp-enable-file-watchers nil)
+  (lsp-enable-folding nil)
+  (lsp-enable-imenu t)
+  (lsp-enable-indentation nil)
+  (lsp-enable-on-type-formatting nil)
+  (lsp-enable-suggest-server-download t)
+  (lsp-enable-symbol-highlighting t)
+  (lsp-enable-text-document-color t)
+  (lsp-modeline-code-actions-enable nil)
+  (lsp-modeline-diagnostics-enable nil)
+  (lsp-modeline-workspace-status-enable t)
+  (lsp-signature-doc-lines 1)
+  (lsp-eldoc-render-all t)
+  (lsp-completion-enable t)
+  (lsp-completion-enable-additional-text-edit t)
+  (lsp-enable-snippet nil)
+  (lsp-completion-show-kind t)
+  (lsp-lens-enable t)
+  (lsp-headerline-breadcrumb-enable-symbol-numbers t)
+  (lsp-headerline-arrow "▶")
+  (lsp-headerline-breadcrumb-enable-diagnostics nil)
+  (lsp-headerline-breadcrumb-icons-enable nil)
+  (lsp-semantic-tokens-enable nil))
+
+
+;;; LSP-TAILWINDCSS
+(use-package lsp-tailwindcss
+  :ensure t
+  :straight t
+  :defer t
+  :config
+  (add-to-list 'lsp-language-id-configuration '(".*\\.erb$" . "html"))
+  :init
+  (setq lsp-tailwindcss-add-on-mode t))
+
+
+;;; ELDOC-BOX
+(use-package eldoc-box
+  :ensure t
+  :straight t
+  :defer t)
+
+;;; DIFF-HL
+(use-package diff-hl
+  :defer t
+  :straight t
+  :ensure t
+  :hook
+  (find-file . (lambda ()
+                 (global-diff-hl-mode)
+                 (diff-hl-flydiff-mode)
+                 (diff-hl-margin-mode)))
+  :custom
+  (diff-hl-side 'left)
+  (diff-hl-margin-symbols-alist '((insert . "┃")
+                                  (delete . "-")
+                                  (change . "┃")
+                                  (unknown . "┆")
+                                  (ignored . "i"))))
+
+
+;;; MAGIT
+(use-package magit
+  :ensure t
+  :straight t
+  :config
+  (if mk-use-nerd-fonts
+      (setopt magit-format-file-function #'magit-format-file-nerd-icons))
+  :defer t)
+
+
+;;; XCLIP
+(use-package xclip
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (after-init . xclip-mode))
+
+
+;;; INDENT-GUIDE
+(use-package indent-guide
+  :defer t
+  :straight t
+  :ensure t
+  :hook
+  (prog-mode . indent-guide-mode)
+  :config
+  (setq indent-guide-char "│"))
+
+
+;;; ADD-NODE-MODULES-PATH
+(use-package add-node-modules-path
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (eval-after-load 'typescript-ts-mode
+    '(add-hook 'typescript-ts-mode-hook #'add-node-modules-path))
+  (eval-after-load 'tsx-ts-mode
+    '(add-hook 'tsx-ts-mode-hook #'add-node-modules-path))
+  (eval-after-load 'typescriptreact-mode
+    '(add-hook 'typescriptreact-mode-hook #'add-node-modules-path))
+  (eval-after-load 'js-mode
+    '(add-hook 'js-mode-hook #'add-node-modules-path)))
+
+
+;;; UNDO-TREE
+(use-package undo-tree
+  :defer t
+  :ensure t
+  :straight t
+  :hook
+  (after-init . global-undo-tree-mode)
+  :init
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-visualizer-diff t
+        undo-limit 800000
+        undo-strong-limit 12000000
+        undo-outer-limit 120000000)
+  :config
+  (setq undo-tree-history-directory-alist
+        `(("." . ,(expand-file-name ".cache/undo" user-emacs-directory)))))
+
+
+;;; RAINBOW-DELIMITERS
+(use-package rainbow-delimiters
+  :defer t
+  :straight t
+  :ensure t
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
+
+
+;;; DOTENV-MODE
+(use-package dotenv-mode
+  :defer t
+  :straight t
+  :ensure t)
+
+
+;;; PULSAR
+(use-package pulsar
+  :defer t
+  :straight t
+  :ensure t
+  :hook
+  (after-init . pulsar-global-mode)
+  :config
+  (setq pulsar-pulse t)
+  (setq pulsar-delay 0.025)
+  (setq pulsar-iterations 10)
+  (setq pulsar-face 'pulsar-generic)
+
+  (add-to-list 'pulsar-pulse-functions 'scroll-up-command)
+  (add-to-list 'pulsar-pulse-functions 'scroll-down-command)
+  (add-to-list 'pulsar-pulse-functions 'flymake-goto-next-error)
+  (add-to-list 'pulsar-pulse-functions 'flymake-goto-prev-error)
+  (add-to-list 'pulsar-pulse-functions 'meow-save)
+  (add-to-list 'pulsar-pulse-functions 'meow-kill)
+  (add-to-list 'pulsar-pulse-functions 'meow-block)
+  (add-to-list 'pulsar-pulse-functions 'diff-hl-next-hunk)
+  (add-to-list 'pulsar-pulse-functions 'diff-hl-previous-hunk))
+
+
+;;; DOOM-MODELINE
+(use-package doom-modeline
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (doom-modeline-buffer-file-name-style 'buffer-name)
+  (doom-modeline-project-detection 'project)
+  (doom-modeline-buffer-name t)
+  (doom-modeline-vcs-max-length 25)
+  :config
+  (if mk-use-nerd-fonts
+      (setq doom-modeline-icon t)
+    (setq doom-modeline-icon nil))
+  :hook
+  (after-init . doom-modeline-mode))
+
+
+;;; NEOTREE
+(use-package neotree
+  :ensure t
+  :straight t
+  :custom
+  (neo-show-hidden-files t)
+  (neo-theme 'nerd)
+  (neo-vc-integration '(face char))
+  :defer t
+  :config
+  (if mk-use-nerd-fonts
+      (setq neo-theme 'nerd-icons)
+    (setq neo-theme 'nerd)))
+
+
+;;; NERD-ICONS
+(use-package nerd-icons
+  :if mk-use-nerd-fonts
+  :ensure t
+  :straight t
+  :defer t)
+
+
+;;; NERD-ICONS-DIRED
+(use-package nerd-icons-dired
+  :if mk-use-nerd-fonts
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
+
+;;; NERD-ICONS-COMPLETION
+(use-package nerd-icons-completion
+  :if mk-use-nerd-fonts
+  :ensure t
+  :straight t
+  :after (:all nerd-icons marginalia)
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
+
+;;; CATPPUCCIN-THEME
+(use-package catppuccin-theme
+  :ensure t
+  :straight t
+  :config
+  (custom-set-faces
+   `(diff-hl-change ((t (:background unspecified :foreground ,(catppuccin-get-color 'blue))))))
+  (custom-set-faces
+   `(diff-hl-delete ((t (:background unspecified :foreground ,(catppuccin-get-color 'red))))))
+  (custom-set-faces
+   `(diff-hl-insert ((t (:background unspecified :foreground ,(catppuccin-get-color 'green))))))
+  (load-theme 'catppuccin :no-confirm))
