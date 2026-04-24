@@ -915,6 +915,29 @@
   ("C-c j" . justl))
 
 
+;;; DOCKER
+(use-package docker
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (docker-command "podman")
+  (docker-compose-command "podman-compose")
+  (docker-container-tramp-method "podman"))
+
+(use-package dockerfile-mode
+  :ensure t
+  :straight t
+  :defer t
+  :mode "\\(?:Dockerfile\\(?:\\..*\\)?\\|Containerfile\\)\\'")
+
+;;; KUBERNETES
+(use-package kubernetes
+  :ensure t
+  :straight t
+  :defer t)
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
