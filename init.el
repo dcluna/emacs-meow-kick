@@ -1060,6 +1060,35 @@
   :defer t)
 
 
+;;; TLDR
+(use-package tldr
+  :ensure t
+  :straight t
+  :defer t)
+
+;;; 0XC (hex calculator)
+(use-package 0xc
+  :ensure t
+  :straight t
+  :defer t)
+
+;;; DUMB-JUMP (fallback jump-to-definition)
+(use-package dumb-jump
+  :ensure t
+  :straight t
+  :defer t
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+
+;;; COPY-AS-FORMAT
+(use-package copy-as-format
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (copy-as-format-default "github"))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
