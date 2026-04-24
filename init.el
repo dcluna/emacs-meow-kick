@@ -1333,4 +1333,17 @@
     (kill-new relative)
     (message "Copied: %s" relative)))
 
+;;; VTERM
+(use-package vterm
+  :ensure t
+  :straight t
+  :defer t)
+
+;;; VTERM-TMUX-NAVIGATOR
+(add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
+(use-package vterm-tmux-navigator
+  :ensure nil
+  :defer t
+  :after vterm)
+
 (provide 'init)
