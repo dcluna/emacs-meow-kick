@@ -619,6 +619,15 @@
   :after yasnippet)
 
 
+;;; EDITORCONFIG
+(use-package editorconfig
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (after-init . editorconfig-mode))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
