@@ -668,6 +668,15 @@
   (prog-mode . hl-todo-mode))
 
 
+;;; ENVRC
+(use-package envrc
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (after-init . envrc-global-mode))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
