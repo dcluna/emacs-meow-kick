@@ -590,6 +590,18 @@
    ("M-g w" . avy-goto-word-1)))
 
 
+;;; SMARTPARENS
+(use-package smartparens
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (prog-mode . smartparens-mode)
+  (emacs-lisp-mode . smartparens-strict-mode)
+  :config
+  (require 'smartparens-config))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
