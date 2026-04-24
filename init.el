@@ -832,6 +832,28 @@
   (rust-ts-mode . cargo-minor-mode))
 
 
+;;; YAML
+(use-package yaml-mode
+  :ensure t
+  :straight t
+  :defer t
+  :mode "\\.ya?ml\\'")
+
+;;; CSV
+(use-package csv-mode
+  :ensure t
+  :straight t
+  :defer t
+  :mode "\\.csv\\'")
+
+;;; SHELL
+(use-package sh-mode
+  :ensure nil
+  :defer t
+  :hook
+  (sh-mode . lsp-deferred))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
