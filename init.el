@@ -659,6 +659,15 @@
   ([remap comment-dwim] . comment-dwim-2))
 
 
+;;; HL-TODO
+(use-package hl-todo
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (prog-mode . hl-todo-mode))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
