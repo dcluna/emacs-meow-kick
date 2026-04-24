@@ -602,6 +602,23 @@
   (require 'smartparens-config))
 
 
+;;; YASNIPPET
+(use-package yasnippet
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (prog-mode . yas-minor-mode)
+  :config
+  (yas-reload-all))
+
+(use-package yasnippet-snippets
+  :ensure t
+  :straight t
+  :defer t
+  :after yasnippet)
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
