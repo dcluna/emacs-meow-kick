@@ -900,6 +900,21 @@
   (TeX-master nil))
 
 
+;;; JUST-MODE
+(use-package just-mode
+  :ensure t
+  :straight t
+  :defer t
+  :mode ("justfile\\'" "\\.just\\'"))
+
+(use-package justl
+  :ensure t
+  :straight t
+  :defer t
+  :bind
+  ("C-c j" . justl))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
