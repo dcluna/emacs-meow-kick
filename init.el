@@ -995,6 +995,22 @@
     :key (lambda () (getenv "GEMINI_API_KEY"))))
 
 
+;;; COPILOT
+(use-package copilot
+  :ensure t
+  :straight (:host github :repo "copilot-emacs/copilot.el"
+             :files ("*.el"))
+  :defer t
+  :hook
+  (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("M-<return>" . copilot-accept-completion)
+              ("M-<right>" . copilot-accept-completion-by-line)
+              ("C-<tab>" . copilot-accept-completion-by-word)
+              ("M-n" . copilot-next-completion)
+              ("M-p" . copilot-previous-completion)))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
