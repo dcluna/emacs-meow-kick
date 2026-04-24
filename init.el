@@ -696,6 +696,15 @@
   (after-init . persistent-scratch-setup-default))
 
 
+;;; VLF
+(use-package vlf
+  :ensure t
+  :straight t
+  :defer t
+  :config
+  (require 'vlf-setup))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
