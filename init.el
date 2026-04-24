@@ -873,6 +873,9 @@
   :defer t
   :custom
   (sql-product 'postgres)
+  :bind (:map sql-mode-map
+              ("C-c C-e" . mk/sql-explain-region)
+              ("C-c C-d" . mk/sql-describe-table))
   :config
   (sql-set-product-feature 'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
   (sql-set-product-feature 'postgres :prompt-cont-regexp "^[-[:alnum:]_]*[-(][#>] "))
@@ -1310,6 +1313,18 @@
   (kill-emacs))
 
 ;;; CUSTOM UTILITIES
+(defun mk/sql-explain-region (beg end)
+  "Run EXPLAIN on the selected SQL region."
+  (interactive "r")
+  (let ((query (buffer-substring-no-properties beg end)))
+    (sql-send-string (format "EXPLAIN %s" query))))
+
+(defun mk/sql-describe-table ()
+  "Describe the table name at point."
+  (interactive)
+  (let ((table (thing-at-point 'symbol t)))
+    (sql-send-string (format "\\d %s" table))))
+
 (defun mk/project-relative-path ()
   "Copy the current buffer's project-relative path to the kill ring."
   (interactive)
