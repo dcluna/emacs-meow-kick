@@ -1038,6 +1038,28 @@
   (emacs-lisp-mode . rainbow-mode))
 
 
+;;; ADDITIONAL THEMES
+(use-package doom-themes
+  :ensure t
+  :straight t
+  :defer t)
+
+(use-package kaolin-themes
+  :ensure t
+  :straight t
+  :defer t)
+
+(use-package mindre-theme
+  :ensure t
+  :straight t
+  :defer t)
+
+(use-package ef-themes
+  :ensure t
+  :straight t
+  :defer t)
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
