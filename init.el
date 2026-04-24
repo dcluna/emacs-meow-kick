@@ -250,7 +250,20 @@
 ;;; ORG-MODE
 (use-package org
   :ensure nil
-  :defer t)
+  :defer t
+  :custom
+  (org-log-into-drawer t)
+  (org-src-tab-acts-natively t)
+  (org-confirm-babel-evaluate nil)
+  :hook
+  (org-mode . auto-fill-mode)
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ruby . t)
+     (shell . t)
+     (python . t)
+     (emacs-lisp . t))))
 
 
 ;;; WHICH-KEY
@@ -936,6 +949,24 @@
   :ensure t
   :straight t
   :defer t)
+
+
+;;; ORG-ROAM
+(use-package org-roam
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (org-roam-directory (expand-file-name "~/dotfiles/org-roam/"))
+  (org-roam-v2-ack t)
+  :bind
+  ("C-c n l" . org-roam-buffer-toggle)
+  ("C-c n f" . org-roam-node-find)
+  ("C-c n i" . org-roam-node-insert)
+  ("C-c n c" . org-roam-capture)
+  ("C-c n g" . org-roam-graph)
+  :config
+  (org-roam-db-autosync-mode))
 
 
 ;;; DOOM-MODELINE
