@@ -650,6 +650,15 @@
   ("C-=" . er/expand-region))
 
 
+;;; COMMENT-DWIM-2
+(use-package comment-dwim-2
+  :ensure t
+  :straight t
+  :defer t
+  :bind
+  ([remap comment-dwim] . comment-dwim-2))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
