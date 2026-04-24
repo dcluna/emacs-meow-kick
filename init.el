@@ -687,6 +687,15 @@
   ("C-c p o" . consult-project-extra-find-other-window))
 
 
+;;; PERSISTENT-SCRATCH
+(use-package persistent-scratch
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (after-init . persistent-scratch-setup-default))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
