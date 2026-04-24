@@ -814,6 +814,24 @@
               ("C-c t p" . python-pytest)))
 
 
+;;; RUST
+(use-package rust-ts-mode
+  :ensure nil
+  :defer t
+  :hook
+  (rust-ts-mode . lsp-deferred)
+  (rust-ts-mode . (lambda () (setq-local lsp-inlay-hint-enable t)))
+  :custom
+  (rust-format-on-save t))
+
+(use-package cargo
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (rust-ts-mode . cargo-minor-mode))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
