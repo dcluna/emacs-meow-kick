@@ -719,6 +719,21 @@
   ("C-c g h" . git-link-homepage))
 
 
+;;; DIFFTASTIC
+(use-package difftastic
+  :ensure t
+  :straight t
+  :defer t
+  :bind (:map magit-blame-read-only-mode-map
+              ("D" . difftastic-magit-diff)
+              ("S" . difftastic-magit-show))
+  :config
+  (eval-after-load 'magit-diff
+    '(transient-append-suffix 'magit-diff '(-1 -1)
+       [("D" "Difftastic diff (dwim)" difftastic-magit-diff)
+        ("S" "Difftastic show" difftastic-magit-show)])))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
