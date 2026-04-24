@@ -874,6 +874,32 @@
               ("C-c C-f" . sqlformat-buffer)))
 
 
+;;; WEB-MODE
+(use-package web-mode
+  :ensure t
+  :straight t
+  :defer t
+  :mode ("\\.erb\\'" "\\.ejs\\'" "\\.html?\\'" "\\.svelte\\'")
+  :hook
+  (web-mode . lsp-deferred)
+  :custom
+  (web-mode-markup-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-code-indent-offset 2)
+  (web-mode-enable-auto-pairing t)
+  (web-mode-enable-css-colorization t))
+
+;;; LATEX (AUCTeX)
+(use-package tex
+  :ensure auctex
+  :straight auctex
+  :defer t
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-master nil))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
