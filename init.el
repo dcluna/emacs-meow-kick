@@ -969,6 +969,32 @@
   (org-roam-db-autosync-mode))
 
 
+;;; GPTEL
+(use-package gptel
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (gptel-default-mode 'org-mode)
+  :config
+  ;; Claude backend (requires ANTHROPIC_API_KEY env var)
+  (setq gptel-backend
+        (gptel-make-anthropic "Claude"
+          :stream t
+          :key (lambda () (getenv "ANTHROPIC_API_KEY"))))
+  (setq gptel-model 'claude-sonnet-4-20250514)
+
+  ;; Additional backends
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :stream t
+    :models '(deepseek-r1:latest qwen2.5-coder:latest))
+
+  (gptel-make-gemini "Gemini"
+    :stream t
+    :key (lambda () (getenv "GEMINI_API_KEY"))))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
