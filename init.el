@@ -677,6 +677,16 @@
   (after-init . envrc-global-mode))
 
 
+;;; CONSULT-PROJECT-EXTRA
+(use-package consult-project-extra
+  :ensure t
+  :straight t
+  :defer t
+  :bind
+  ("C-c p f" . consult-project-extra-find)
+  ("C-c p o" . consult-project-extra-find-other-window))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
