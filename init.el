@@ -734,6 +734,59 @@
         ("S" "Difftastic show" difftastic-magit-show)])))
 
 
+;;; RUBY / RAILS
+(use-package ruby-ts-mode
+  :ensure nil
+  :defer t
+  :hook
+  (ruby-ts-mode . lsp-deferred)
+  :custom
+  (ruby-indent-level 2))
+
+(use-package inf-ruby
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (ruby-base-mode . inf-ruby-minor-mode))
+
+(use-package rspec-mode
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (ruby-base-mode . rspec-mode)
+  :custom
+  (rspec-use-rvm nil)
+  (rspec-use-bundler-when-possible t)
+  (rspec-primary-source-dirs '("app" "lib"))
+  (compilation-scroll-output t))
+
+(use-package rubocop
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (ruby-base-mode . rubocop-mode)
+  :custom
+  (rubocop-autocorrect-on-save t))
+
+(use-package bundler
+  :ensure t
+  :straight t
+  :defer t)
+
+(use-package rake
+  :ensure t
+  :straight t
+  :defer t)
+
+(use-package rails-i18n
+  :ensure t
+  :straight t
+  :defer t)
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
