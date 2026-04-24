@@ -1001,6 +1001,7 @@
   :straight (:host github :repo "copilot-emacs/copilot.el"
              :files ("*.el"))
   :defer t
+  :unless noninteractive
   :hook
   (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
@@ -1009,6 +1010,21 @@
               ("C-<tab>" . copilot-accept-completion-by-word)
               ("M-n" . copilot-next-completion)
               ("M-p" . copilot-previous-completion)))
+
+
+;;; SHELL-MAKER
+(use-package shell-maker
+  :ensure t
+  :straight (:host github :repo "xenodium/chatgpt-shell"
+             :files ("shell-maker.el"))
+  :defer t)
+
+;;; CLAUDE-CODE
+(use-package claude-code
+  :ensure t
+  :straight (:host github :repo "stevemolitor/claude-code.el"
+             :files ("*.el"))
+  :defer t)
 
 
 ;;; DOOM-MODELINE
