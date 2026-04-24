@@ -1027,6 +1027,17 @@
   :defer t)
 
 
+;;; RAINBOW-MODE
+(use-package rainbow-mode
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (css-mode . rainbow-mode)
+  (web-mode . rainbow-mode)
+  (emacs-lisp-mode . rainbow-mode))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
