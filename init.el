@@ -705,6 +705,20 @@
   (require 'vlf-setup))
 
 
+;;; GIT-LINK
+(use-package git-link
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (git-link-open-in-browser nil)
+  (git-link-use-commit t)
+  :bind
+  ("C-c g l" . git-link)
+  ("C-c g c" . git-link-commit)
+  ("C-c g h" . git-link-homepage))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
