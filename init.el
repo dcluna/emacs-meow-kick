@@ -628,6 +628,19 @@
   (after-init . editorconfig-mode))
 
 
+;;; HELPFUL
+(use-package helpful
+  :ensure t
+  :straight t
+  :defer t
+  :bind
+  ([remap describe-function] . helpful-callable)
+  ([remap describe-variable] . helpful-variable)
+  ([remap describe-key] . helpful-key)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-symbol] . helpful-symbol))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
