@@ -854,6 +854,26 @@
   (sh-mode . lsp-deferred))
 
 
+;;; SQL
+(use-package sql
+  :ensure nil
+  :defer t
+  :custom
+  (sql-product 'postgres)
+  :config
+  (sql-set-product-feature 'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
+  (sql-set-product-feature 'postgres :prompt-cont-regexp "^[-[:alnum:]_]*[-(][#>] "))
+
+(use-package sqlformat
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (sqlformat-command 'pgformatter)
+  :bind (:map sql-mode-map
+              ("C-c C-f" . sqlformat-buffer)))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
