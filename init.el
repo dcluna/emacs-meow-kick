@@ -1089,6 +1089,14 @@
   (copy-as-format-default "github"))
 
 
+;;; REVEAL-IN-OSX-FINDER
+(use-package reveal-in-osx-finder
+  :if (eq system-type 'darwin)
+  :ensure t
+  :straight t
+  :defer t)
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
