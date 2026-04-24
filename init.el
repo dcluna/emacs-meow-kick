@@ -572,7 +572,22 @@
   (add-to-list 'pulsar-pulse-functions 'meow-kill)
   (add-to-list 'pulsar-pulse-functions 'meow-block)
   (add-to-list 'pulsar-pulse-functions 'diff-hl-next-hunk)
-  (add-to-list 'pulsar-pulse-functions 'diff-hl-previous-hunk))
+  (add-to-list 'pulsar-pulse-functions 'diff-hl-previous-hunk)
+  (add-to-list 'pulsar-pulse-functions 'avy-goto-char-timer))
+
+
+;;; AVY
+(use-package avy
+  :ensure t
+  :straight t
+  :defer t
+  :custom
+  (avy-timeout-seconds 0.3)
+  (avy-all-windows t)
+  :bind
+  (("C-'" . avy-goto-char-timer)
+   ("M-g g" . avy-goto-line)
+   ("M-g w" . avy-goto-word-1)))
 
 
 ;;; DOOM-MODELINE
