@@ -1309,4 +1309,13 @@
   (read-key)
   (kill-emacs))
 
+;;; CUSTOM UTILITIES
+(defun mk/project-relative-path ()
+  "Copy the current buffer's project-relative path to the kill ring."
+  (interactive)
+  (let* ((root (project-root (project-current t)))
+         (relative (file-relative-name (buffer-file-name) root)))
+    (kill-new relative)
+    (message "Copied: %s" relative)))
+
 (provide 'init)
