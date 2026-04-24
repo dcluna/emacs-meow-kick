@@ -787,6 +787,33 @@
   :defer t)
 
 
+;;; PYTHON
+(use-package python
+  :ensure nil
+  :defer t
+  :hook
+  (python-ts-mode . lsp-deferred)
+  :custom
+  (python-indent-offset 4))
+
+(use-package pyvenv
+  :ensure t
+  :straight t
+  :defer t
+  :hook
+  (python-base-mode . pyvenv-mode))
+
+(use-package python-pytest
+  :ensure t
+  :straight t
+  :defer t
+  :bind (:map python-base-mode-map
+              ("C-c t f" . python-pytest-file)
+              ("C-c t t" . python-pytest-function)
+              ("C-c t r" . python-pytest-repeat)
+              ("C-c t p" . python-pytest)))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
