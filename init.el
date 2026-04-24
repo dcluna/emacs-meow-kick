@@ -641,6 +641,15 @@
   ([remap describe-symbol] . helpful-symbol))
 
 
+;;; EXPAND-REGION
+(use-package expand-region
+  :ensure t
+  :straight t
+  :defer t
+  :bind
+  ("C-=" . er/expand-region))
+
+
 ;;; DOOM-MODELINE
 (use-package doom-modeline
   :ensure t
